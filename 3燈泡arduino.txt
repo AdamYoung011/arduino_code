@@ -1,0 +1,34 @@
+int potPin = 3; // select the input pin for the potentiometer
+int ledPin1 = 9; // select the pin for the LED
+int ledPin2 = 10;
+int ledPin3 =11;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int sensorValue = analogRead(potPin);
+  Serial.println(sensorValue, DEC);
+   
+  sensorValue = sensorValue/4; // convert from 0-1024 to 0-255
+  
+  if (sensorValue < 85)
+  {
+    analogWrite(ledPin1, sensorValue);
+    analogWrite(ledPin2, 0);
+  }
+  else
+  {
+    analogWrite(ledPin2, sensorValue-85);
+    if (sensorValue > 170)
+    {
+      analogWrite(ledPin3, sensorValue-170);
+    }
+    else
+    {
+      analogWrite(ledPin3, 0);
+    } 
+  }
+  delay(150);
+}
